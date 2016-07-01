@@ -1,0 +1,89 @@
+{% load staticfiles %}
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{% static 'js/mark.min.js' %}"></script>
+<style>
+
+
+h2 {
+  font: 400 30px/1.5 Helvetica, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  border-bottom: 1px solid #ccc;
+}
+
+li:last-child {
+  border: none;
+}
+
+li a {
+  text-decoration: none;
+  color: #000;
+  display: block;
+  width: 200px;
+
+  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
+}
+
+li a:hover {
+  font-size: 30px;
+  background: #f6f6f6;
+}
+mark{
+    background: orange;
+    color: black;
+}
+
+</style>
+</head>
+<body>
+<div class="context">
+    <p>My text content</p>
+</div>
+
+<div>
+<form action="" method="post" id="test">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+</form>
+</div>
+<div class="message" id="msgbox"></div>
+<script>
+var instance = new Mark(document.querySelector("#msgbox"));
+        var options = {
+        "accuracy": {
+        "value": "exactly",
+        "limiters": [",", "."]
+        }
+        };
+
+$('#test').submit(function(e){
+    console.log($(this).serialize())
+    $.post('./file/',$(this).serialize(),function(data){
+        $('#msgbox').empty().append(data)
+         instance.mark("study",options);
+
+    });
+    e.preventDefault();
+
+});
+
+</script>
+</body>
+</html>
