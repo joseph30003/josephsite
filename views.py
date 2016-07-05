@@ -25,10 +25,11 @@ def get_name(request):
 	return render_to_response('trail_highlight.html',{'form':form},RequestContext(request))
 
 def show_file(request):
-	xmldir="C:/Users/310246089/Desktop/PTEN/latest/"
-	filename =xmldir + request.POST['file_id']+".xml"
+	import urllib.request as ur
+	xml_url= 'https://clinicaltrials.gov/show/'+request.POST['file_id']+'?resultsxml=true'
+	file = ur.urlopen(xml_url)
 
-	tree = ET.parse(filename)
+	tree = ET.parse(file)
 	root = tree.getroot()
 
 	xmldict = XmlDictConfig(root)

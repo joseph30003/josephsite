@@ -12,7 +12,7 @@ def load_stores_from_sql():
     settings_dir = os.path.dirname(__file__)
     PROJECT_ROOT = os.path.abspath(os.path.dirname(settings_dir))
     SQL_FOLDER = os.path.join(PROJECT_ROOT, 'sql/')
-    
+
     sql_statements = open(SQL_FOLDER+'words.sqlite3.sql', 'rb').read().decode('utf-8')
     return sql_statements
 
