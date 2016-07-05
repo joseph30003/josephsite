@@ -22,7 +22,7 @@ def get_name(request):
 			return HttpResponse(json.dumps({'message':message}))
 	else:
 		form = NameForm()
-	return render_to_response('name.html',{'form':form},RequestContext(request))
+	return render_to_response('trail_highlight.html',{'form':form},RequestContext(request))
 
 def show_file(request):
 	xmldir="C:/Users/310246089/Desktop/PTEN/latest/"
