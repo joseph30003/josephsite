@@ -17,7 +17,7 @@ class XmlListConfig(list):
                     self.append(text)
 class XmlDictConfig(dict):
 
-    def __init__(self, parent_element,term):
+    def __init__(self, parent_element):
         if parent_element.items():
             self.update(dict(parent_element.items()))
         for element in parent_element:
@@ -25,7 +25,7 @@ class XmlDictConfig(dict):
                 # treat like dict - we assume that if the first two tags
                 # in a series are different, then they are all different.
                 if len(element) == 1 or element[0].tag != element[1].tag:
-                    aDict = XmlDictConfig(element,term)
+                    aDict = XmlDictConfig(element)
                 # treat like list - we assume that if the first two tags
                 # in a series are the same, then the rest are the same.
                 else:
@@ -48,8 +48,6 @@ class XmlDictConfig(dict):
             else:
 
                 context = str(element.text)
-                insensitive_term = re.compile(re.escape(term),re.IGNORECASE)
-                context = insensitive_term.sub(" <span style=\"color:blue;font-size:200%\">"+term+"</span> ",context)
 
                 if element.tag in self.keys():
                     if not isinstance(self[element.tag], str):

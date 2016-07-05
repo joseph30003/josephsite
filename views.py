@@ -26,12 +26,12 @@ def get_name(request):
 
 def show_file(request):
 	xmldir="C:/Users/310246089/Desktop/PTEN/latest/"
-	filename =xmldir + request.POST['your_name']+".xml"
-	word = request.POST['term']
+	filename =xmldir + request.POST['file_id']+".xml"
+
 	tree = ET.parse(filename)
 	root = tree.getroot()
-	word = " "+word+" "
-	xmldict = XmlDictConfig(root,word)
+
+	xmldict = XmlDictConfig(root)
 	t = loader.get_template('ctcontents.html')
 	c = Context(xmldict)
 	return HttpResponse(t.render(c))
