@@ -14,7 +14,7 @@ def index(request):
     d = Context({'person':{'first_name':'qin'}})
     return HttpResponse(t.render(d))
 
-def get_name(request):
+def get_menu(request):
 	if request.method == 'POST':
 		form = NameForm(request.POST)
 		if form.is_valid():
@@ -35,4 +35,12 @@ def show_file(request):
 
 	return HttpResponse(t.render(xmldict))
 
+def vl_search(request):
+	t = loader.get_template('index.html')
+	d = Context({'person':{'first_name':'qin'}})
+	return HttpResponse(t.render(d))
 
+def vl_result(request):
+	t = loader.get_template('v_result.html')
+	d = Context({'person':{'first_name':'qin'}})
+	return HttpResponse(t.render(d))
