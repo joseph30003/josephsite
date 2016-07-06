@@ -1,18 +1,5 @@
-{% load staticfiles %}
-<html>
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="{% static 'js/mark.min.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'css/master.css' %}" type="text/css" media="screen" charset="utf-8" />
-<style>
-mark{
-    background: orange;
-    color: black;
+{% extends "base.html" %}
 
-}
-</style>
-</head>
-<body>
 
 <div id="wrapper" class="span-12">
 	<div id="pages">
@@ -26,29 +13,24 @@ mark{
 
 	</div>
 
-	<div id="content" class="col span-9" >
-		<div class="col last span-9">
-		<h4>Search Result</h4>
-		</div>
 
-		<div class="post span-9" >
 
-			<div class="post-content last span-9 nudge-2">
+		{% block title %}Search Result{% endblock %}
+
+
+		{% block content %}
 			<h3> Welcome to Clinical Trial Demo API</h3>
 				<p>Trial ID: the Unique ID of trail in ClinicalTrials.gov. (Example: NCT02585778)</p>
 
 				<p>Searching Word: any word you want to highlight in given trial. (Example: a-1)</p>
-			</div>
-		</div>
 
+		{% endblock %}
 
-	</div>
-
-	<div id="sidebar" class="col last span-3">
+		{% block sidebar %}
 
 		<div id="search" class="section">
 			<h3>Search</h3>
-			<form action="" method="post" id="test">
+			<form action="" method="post" id="searchbar">
    			 {% csrf_token %}
              {{ form }}
             <input type="submit" value="Search" />
@@ -56,36 +38,32 @@ mark{
 
 		</div>
 
-	</div>
 
-	<div id="footer">
-		<p id="foo"><em>P</em>TEN</p>
+	{% endblock %}
 
-		<p>Copyright © 2016 PTEN Philips . All rights reserved.</p>
-	</div>
-</div>
+	{% block script %}
+		var instance = new Mark(document.querySelector("#content"));
+				var options = {
+				"accuracy": {
+				"value": "exactly",
+				"limiters": [",", "."]
+				}
+				};
+
+		$('#searchbar').submit(function(e){
+
+			$.post('./file/',$(this).serialize(),function(data){
+				$('#content').empty().append(data)
+				 instance.mark($('#id_term').val(),options);
+
+			});
+			e.preventDefault();
+
+		});
+
+		{% endblock %}
 
 
-<script>
-var instance = new Mark(document.querySelector("#content"));
-        var options = {
-        "accuracy": {
-        "value": "exactly",
-        "limiters": [",", "."]
-        }
-        };
 
-$('#test').submit(function(e){
 
-    $.post('./file/',$(this).serialize(),function(data){
-        $('#content').empty().append(data)
-         instance.mark($('#id_term').val(),options);
 
-    });
-    e.preventDefault();
-
-});
-
-</script>
-</body>
-</html>

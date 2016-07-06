@@ -1,12 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}{{ block.super }} - All test Recipes{% endblock %}
+{% block title %}Hello{% endblock %}
 
 {% block content %}
-<h2>All test Recipes</h2>
-<ul>
+<h2><a href="./trials/">Trial Content Demo - Highlight Keywords</a></h2>
 
-    <li><a href="">{{ person.first_name }}</a></li>
+{% endblock %}
 
-</ul>
+{% block sidebar %}
+
+<div id="about" class="section">
+    <h3>About</h3>
+
+    <p>Read a brief introduction to clinical research, including information on types of studies and what happens during a study. Find information about eligibility to participate in a study, risks and benefits of study participation, the informed consent process, and questions to ask when considering whether to participate in a study.</p>
+
+</div>
+
+
+
+
 {% endblock %}
