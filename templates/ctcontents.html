@@ -1,7 +1,28 @@
-<h2 >{{ official_title }}</h2>
-<h3>Summary</h3>
-<p>{{ brief_summary.textblock|safe|linebreaks }}</p>
-<h3>Details</h3>
-<p>{{ detailed_description.textblock|safe|linebreaks }}</p>
-<h3>Eligibility</h3>
-<p>{{ eligibility.criteria.textblock|safe|linebreaks }}</p>
+           {% load trialparser %}
+
+		<div class="col last span-9">
+		<h4>{{ clinical_study.brief_title  }}</h4>
+		</div>
+
+		<div class="post span-9" >
+
+			 <div class="post-meta col span-2">
+				<span>{{ clinical_study.start_date }}</span>
+
+			</div>
+
+			<div class="post-content last span-9 nudge-2">
+				<p>{{ clinical_study.official_title  }}</p>
+
+
+				<h5>Summary</h5>
+                <p>{{ clinical_study.brief_summary.textblock|linebreaks }}</p>
+                <h5>Details</h5>
+                <p>{{ clinical_study.detailed_description.textblock|linebreaks }}</p>
+                <h5>Eligibility</h5>
+                <p>{{ clinical_study.eligibility.criteria.textblock|linebreaks }}</p>
+
+			</div>
+		</div>
+
+

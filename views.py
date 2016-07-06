@@ -6,7 +6,7 @@ from django.template import Context, loader,RequestContext
 from .models import words
 from .forms import NameForm
 import xml.etree.ElementTree as ET
-from .render import XmlDictConfig
+import xmltodict
 import json
 
 def index(request):
@@ -27,14 +27,12 @@ def get_name(request):
 def show_file(request):
 	import urllib.request as ur
 	xml_url= 'https://clinicaltrials.gov/show/'+request.POST['file_id']+'?resultsxml=true'
-	file = ur.urlopen(xml_url)
+	data = ur.urlopen(xml_url).read()
+	xmldict = xmltodict.parse(data)
 
-	tree = ET.parse(file)
-	root = tree.getroot()
-
-	xmldict = XmlDictConfig(root)
 	t = loader.get_template('ctcontents.html')
-	c = Context(xmldict)
-	return HttpResponse(t.render(c))
+
+
+	return HttpResponse(t.render(xmldict))
 
 

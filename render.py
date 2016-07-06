@@ -47,7 +47,7 @@ class XmlDictConfig(dict):
             # the text
             else:
 
-                context = str(element.text)
+                context = element.text
 
                 if element.tag in self.keys():
                     if not isinstance(self[element.tag], str):
