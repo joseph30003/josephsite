@@ -52,6 +52,7 @@ def vl_result(request):
 
 	if request.method == 'POST':
 		form = questionForm()
+		title = 'questions'
 		disease = request.POST['disease']
 		gene = request.POST['gene']
 		age = request.POST['age']
@@ -190,6 +191,6 @@ def vl_result(request):
 
 	else:
 		form = SearchForm()
-
+		title = 'search'
 	return render(request,'v_result.html',{'form':form,'records':ls,'disease': disease, 'gene': gene, 'aas': aas, 'age': age,
-                   'gender': gender, 'stage': stage, 'grade': grade})
+                   'gender': gender, 'stage': stage, 'grade': grade,'subtitle':title})
