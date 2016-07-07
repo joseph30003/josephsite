@@ -4,7 +4,7 @@ from django.shortcuts import *
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template import Context, loader,RequestContext
 from .models import words
-from .forms import NameForm,SearchForm
+from .forms import NameForm,SearchForm,questionForm
 import xml.etree.ElementTree as ET
 import xmltodict
 import json, requests
@@ -42,9 +42,16 @@ def vl_search(request):
 
 def vl_result(request):
 	ls = []
-	total=0
+	disease = ''
+	gene = ''
+	age = ''
+	gender = ''
+	aas = ''
+	stage = ''
+	grade = ''
+
 	if request.method == 'POST':
-		form = SearchForm(request.POST)
+		form = questionForm()
 		disease = request.POST['disease']
 		gene = request.POST['gene']
 		age = request.POST['age']
@@ -153,12 +160,12 @@ def vl_result(request):
 						"fields": ["Exclusion Criteria", "Exclusion Criteria.whitespace", "Exclusion Criteria.normal"]
 					}
 				})
-		if stage != 'Select':
+		if stage != '':
 			body["query"]["bool"]["must"].append({
 				"match": {
 					"stages": stage.split(' ')[1]}})
 
-		if grade != 'Select':
+		if grade != '':
 			body["query"]["bool"]["must"].append({
 				"match": {
 					"grades": grade.split(' ')[1]}})
@@ -183,4 +190,6 @@ def vl_result(request):
 
 	else:
 		form = SearchForm()
-	return render(request,'v_result.html',{'form':form,'records':ls,'total': total})
+
+	return render(request,'v_result.html',{'form':form,'records':ls,'disease': disease, 'gene': gene, 'aas': aas, 'age': age,
+                   'gender': gender, 'stage': stage, 'grade': grade})

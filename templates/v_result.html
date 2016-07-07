@@ -2,7 +2,7 @@
 {% load trialparser %}
 
 
-{% block title %}<span class="by">by</span> Joseph{% endblock %}
+{% block title %}<span class="by">disease</span> {{ disease }}<span class="by"> gene</span> {{ gene }}  <span class="by"> gender</span> {{ gender }}<span class="by"> age</span> {{ age }} {{ stage }} {{ grade }}{% endblock %}
 
 {% block content %}
     <div id="page-wrap">
@@ -38,8 +38,6 @@
                 <p><b>Inclusion Criteria: </b>{{rec.source|InclusionCriteria}}</p>
                 <p><b>Exclusion Criteria: </b>{{rec.source|ExclusionCriteria}}</p>
                 <p><b>Gender: </b>{{rec.source.gender}}</p>
-
-
 
 
 
