@@ -1,7 +1,7 @@
 *									{ margin: 0; padding: 0; }
-body								{ font: 14px Helvetica, Sans-Serif; }
 
-#page-wrap							{ width: 700px; margin: 25px auto; }
+
+#page-wrap							{ width: 100%; margin: 25px auto; }
 
 
 .ui-tabs 							{ zoom: 1; }
@@ -27,7 +27,7 @@ li.ui-state-processing a 			{ cursor: text; }
 
 
 
-a.mover 							{ background: #900; padding: 6px 12px; position: absolute;
+a.mover 							{ background: #0F83DB; padding: 6px 12px; position: absolute;
 								      color: white; font-weight: bold; text-decoration: none; }
 .next-tab 							{ bottom: 0; right: 0; -moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px; }
 .prev-tab 							{ bottom: 0; left: 0; -moz-border-radius-topright: 10px; -webkit-border-top-right-radius: 10px; }

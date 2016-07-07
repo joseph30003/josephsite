@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}<span class="by">by</span> Joseph{% endblock %}
+
+{% block content %}
+    <div class="post span-9" >
+            <div class="post-meta col span-2">
+				<span><a href="">20 May</a></span>
+				<ul>
+					<li>In <a href="">Music</a>, <a href="">Design</a></li>
+					<li><a href="">10 comments</a></li>
+				</ul>
+			</div>
+
+        <div class="post-content last span-9 nudge-2">
+            <h3><a href="./trials/">Gene/Gene Synonyms Dictionary</a></h3>
+
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block sidebar %}
+
+<div id="search" class="section">
+    <h3>search</h3>
+    <form  action="/trialmatch/search/" method="post" id="searchForm">
+			{% csrf_token %}
+			<div class="form-group">
+			<div class="col-md-4">
+				<label for="exampleInputDisease">Enter the disease of the patient</label>
+				<input type="text" class="form-control" id="disease" placeholder="Disease Type" name="diseaseType">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-2">
+				<label for="exampleInputAge">Age in years</label>
+				<input type="text" class="form-control" id="age" placeholder="Age" name="age">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-2">
+				<label for="exampleInputMale">Gender</label>
+				<select class="form-control" id="gender" name="gender">
+					<option>Select</option>
+					<option>Male</option>
+					<option>Female</option>
+					<option>Both</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-2">
+				<label for="exampleInputGene">Gene Mutation</label>
+				<input type="text" class="form-control" id="gene" placeholder="Gene" name="geneType">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-2">
+				<label for="exampleInputAAS">Amino Acid Substitution</label>
+				<input type="text" class="form-control" id="aas" placeholder="AAS" name="aas">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-2">
+				<label for="exampleInputStage">Stage</label>
+				<select class="form-control" id="stage" name="stage">
+					<option>Select</option>
+					<option>Stage I</option>
+					<option>Stage II</option>
+					<option>Stage III</option>
+					<option>Stage IV</option>
+					<option>Stage X</option>
+					<option>Stage IA</option>
+					<option>Stage IIA</option>
+					<option>Stage IIIA</option>
+			        <option>Stage IVA</option>
+					<option>Stage IB</option>
+					<option>Stage IIB</option>
+					<option>Stage IIIB</option>
+					<option>Stage IVB</option>
+					<option>Stage IC</option>
+					<option>Stage IIC</option>
+					<option>Stage IIIC</option>
+					<option>Stage IVC</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-2">
+				<label for="exampleInputGrade">Grade</label>
+				<select class="form-control" id="grade" name="grade">
+					<option>Select</option>
+					<option>Grade 1</option>
+					<option>Grade 2</option>
+					<option>Grade 3</option>
+					<option>Grade 4</option>
+					<option>Grade I</option>
+					<option>Grade II</option>
+					<option>Grade III</option>
+					<option>Grade IV</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div >
+				<label for="exampleInputLocation">Address</label>
+				<input type="text" class="form-control" id="address" placeholder="location" name="address">
+			</div>
+		</div>
+
+		<div >
+		<div >
+		<input type="go"  >
+		</div>
+		</div>
+
+	</form>
+
+
+</div>
+
+
+
+
+{% endblock %}
