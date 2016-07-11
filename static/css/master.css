@@ -259,18 +259,7 @@ input {
 	letter-spacing: 2px;
 	line-height: 1.4;
 }
-.section label,select{
-    text-align: right;
-    clear: both;
-    float:left;
-    line-height: 1.4;
-}
 
-.section input,multiple{
-
-    line-height: 1.4;
-
-}
 .section h3 {
 	margin-bottom: 1em;
 	padding-bottom: .8em;

@@ -1,4 +1,5 @@
 from django import forms
+from .models import Query,Answer,Sections,Characters
 
 def createChoice(lists):
     foo=()
@@ -10,20 +11,39 @@ class NameForm(forms.Form):
 	file_id = forms.CharField(label='Trial ID',max_length=100)
 	term = forms.CharField(label='Searching word',max_length=100)
 
-class SearchForm(forms.Form):
-	Gender_list = ['Male','Female','Both']
-	Stage_list = ['Stage I','Stage II','Stage III','Stage IV','Stage X','Stage IA','Stage IIA','Stage IIIA','Stage IVA','Stage IB','Stage IIB','Stage IIIB','Stage IVB','Stage IC','Stage IIC','Stage IIIC','Stage IVC']
-	Grade_list = ['Grade 1','Grade 2','Grade 3','Grade 4','Grade I','Grade II','Grade III','Grade IV']
-	disease = forms.CharField(label='Enter the disease of the patient',max_length=100,required=False,widget=forms.TextInput(attrs={'placeholder':'Disease Name'}))
-	age = forms.CharField (label='Age in years',required=False,max_length=2,widget=forms.TextInput(attrs={'placeholder':'Age'}))
-	gender = forms.ChoiceField(choices=createChoice(Gender_list),label="Gender")
-	gene = forms.CharField(label="Gene Mutation",required=False,max_length=100,widget=forms.TextInput(attrs={'placeholder':'Gene Name'}))
-	aas = forms.CharField(label="Amino Acid Substitution", required=False,max_length=100,widget=forms.TextInput(attrs={'placeholder':'Amino Acid Substitution'}))
-	stage = forms.ChoiceField(choices=createChoice(Stage_list), label="Stage")
-	grade = forms.ChoiceField(choices=createChoice(Grade_list), label="Grade")
-	address = forms.CharField(label='Address', max_length=100, required=False,widget=forms.TextInput(attrs={'placeholder': 'Address'}))
+class SearchForm(forms.ModelForm):
 
-class questionForm(forms.Form):
-	sentence = forms.CharField(label='which sentence you think is correct',max_length=300,required=False)
-	answer= forms.ChoiceField(choices=(('true','true'),('false','false')), label="choose your answer")
-	words = forms.CharField(label='which word is not correct', max_length=300, required=False)
+
+	class Meta:
+		model = Query
+		fields = ['disease', 'age', 'gender', 'gene', 'aas', 'stage', 'grade', 'address']
+		labels = {
+			'disease' : 'Disease Name',
+		}
+
+
+class questionForm(forms.ModelForm):
+
+	class Meta:
+		model = Answer
+		fields = '__all__'
+		labels = {
+			'eligibility' : 'Is the patient eligible for this trial',
+			'character' : 'What characteristics of the patient’s profile make him/her (in)eligible',
+			'section' : 'What section(s) of the clinical trial document allowed you to render this decision',
+			'sentence' : 'What sentence(s) of these section(s) allowed you to render this decision',
+			'comment' : 'Any additional comment(s)?'
+		}
+
+	def __init__(self, *args, **kwargs):
+		super(questionForm, self).__init__(*args, **kwargs)
+		self.fields['section'].widget = forms.CheckboxSelectMultiple()
+		self.fields['section'].queryset = Sections.objects.all()
+		self.fields['character'].widget = forms.CheckboxSelectMultiple()
+		self.fields['character'].queryset = Characters.objects.all()
+
+class QueryForm(forms.ModelForm):
+	class Meta:
+		model = Query
+		fields = ['disease','age','gender','gene','aas','stage','grade','address']
+
