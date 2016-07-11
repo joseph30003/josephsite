@@ -48,6 +48,6 @@ class Answer(models.Model):
 	Character_list = ['disease','age','gender','stage','grade','gene','mutation']
 	eligibility = models.BooleanField(choices=Eligibility_list)
 	character = models.ManyToManyField(Characters)
-	section = models.ManyToManyField(Sections,blank=True, null=True)
+	section = models.ManyToManyField(Sections)
 	sentence = models.TextField()
 	comment = models.TextField()
