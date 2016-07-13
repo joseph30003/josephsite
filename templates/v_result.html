@@ -1,12 +1,16 @@
-{% extends "base.html" %}
+{% extends "base_result.html" %}
 {% load trialparser %}
 
 
-{% block title %}<span class="by">disease</span> {{ disease }}<span class="by"> gene</span> {{ gene }}  <span class="by"> gender</span> {{ gender }}<span class="by"> age</span> {{ age }} {{ stage }} {{ grade }}{% endblock %}
 
 {% block content %}
+
+
+
+<div class="span-12" >
+
+
     <div id="page-wrap">
-     <div class="post span-9" >
 		<div id="tabs">
 
     		<ul>
@@ -22,26 +26,74 @@
 
               <div id="fragment-{{ forloop.counter }}" class="ui-tabs-panel ui-tabs-hide">
 
+                <div id="content" class="col last span-8" >
 
-                <b>NCT ID:  </b><a target="_blank" href="https://clinicaltrials.gov/ct2/show/{{ rec.id }}"> {{ rec.id }} </a>
+                <p><b>NCT ID:  </b><a target="_blank" href="https://clinicaltrials.gov/ct2/show/{{ rec.id }}"> {{ rec.id }} </a></p>
                 <p><b>Title:  </b>
-                {% if rec.source.official_title %}
-                {{ rec.source.official_title }}
+                {% if rec.highlight.official_title.0 %}
+                {{ rec.highlight.official_title.0  | truncatewords:30 |safe }}
                 {% else %}
-                {{ rec.source.brief_title }}
+                {{ rec.source.official_title | truncatewords:30 }}
                 {% endif %}
                 </p>
-                <p><b>Purpose:  </b>{{rec.source.Purpose}}</p>
-                <p><b>Description:  </b>{{rec.source.description}}</p>
+                <p><b>Purpose:  </b>{{rec.highlight.Purpose.0  | truncatewords:30 |safe}}</p>
+                <p><b>Description:  </b>{{rec.highlight.description.0 | truncatewords:30 |safe}}</p>
                 <p><b>Maximum Age: </b>{{ rec.source.maximumAge|years  }} years</p>
                 <p><b>Minimum Age: </b>{{rec.source.minimumAge|years  }} years</p>
                 <p><b>Inclusion Criteria: </b>{{rec.source|InclusionCriteria}}</p>
                 <p><b>Exclusion Criteria: </b>{{rec.source|ExclusionCriteria}}</p>
                 <p><b>Gender: </b>{{rec.source.gender}}</p>
 
+                </div>
 
+                  <div id="sidebar-{{ forloop.counter }}" class="col last span-3">
+
+                    <div id="profile" class="section">
+                     <h3>Profile</h3>
+                     <h5> <span class="by"> disease</span> </br>{{ disease }}</h5>
+                     <h5> <span class="by"> gene</span></br> {{ gene }} </h5>
+                     <h5> <span class="by"> gender</span></br> {{ gender }}</h5>
+                     <h5> <span class="by"> age</span></br> {{ age }}</h5>
+                     <h5>   {{ stage }}</h5>
+                     <h5>   {{ grade }} </h5>
+
+
+                    </div>
+                    <div id="search" class="section">
+                    {% if rec.author  %}
+                    <h3> <span class="by">Already done by </span>  {{ rec.author }}</h3>
+                    {% else %}
+
+                     <h3>{{ subtitle }}</h3>
+
+
+                    <form method="post" id="question-{{ forloop.counter }}">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input type="submit" value="finish" />
+                    </form>
+                    {% endif %}
+
+                    </div>
+
+                </div>
 
             </div>
+
+            <script>
+            $('#question-{{ forloop.counter }}').submit(function(e){
+
+			$.post('./{{ rec.id }}/',$(this).serialize(),function(data){
+				$('#sidebar-{{ forloop.counter }}').empty().append(data);
+
+			});
+			e.preventDefault();
+
+		    });
+
+
+
+            </script>
 
             {% endfor %}
 
@@ -59,15 +111,7 @@
 
 {% block sidebar %}
 
-<div id="search" class="section">
-    <h3>{{ subtitle }}</h3>
-    <form action="" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit" />
-    </form>
 
-</div>
 
 
 
@@ -75,6 +119,12 @@
 {% endblock %}
 
 {% block script %}
+
+
+
+
+
+
     $(function() {
 
 			var $tabs = $('#tabs').tabs();

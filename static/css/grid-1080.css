@@ -35,6 +35,10 @@
 	width: 25.2em;
 }
 
+.span-3-p {
+	width: 25.2%;
+}
+
 .nudge-3 {
 	padding-left: 22.8em;
 }
@@ -82,7 +86,9 @@
 .span-9 {
 	width: 80.4em;
 }
-
+.span-9-p {
+	width: 80.4%;
+}
 .nudge-9 {
 	padding-left: 68.4em;
 }

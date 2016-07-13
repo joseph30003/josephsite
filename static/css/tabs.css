@@ -1,7 +1,7 @@
 *									{ margin: 0; padding: 0; }
 
 
-#page-wrap							{ width: 100%; margin: 25px auto; }
+#page-wrap							{ width: 100%; height:100%; margin: 25px auto; }
 
 
 .ui-tabs 							{ zoom: 1; }
@@ -21,7 +21,7 @@ li.ui-state-processing a 			{ cursor: text; }
 .ui-tabs.ui-tabs-collapsible 
 .ui-tabs-nav li.ui-tabs-selected a  { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
 .ui-tabs .ui-tabs-panel 			{ padding: 20px; display: block; border-width: 0; background: none;
-									  border: 1px solid #ccc; position: relative; min-height: 200px; }
+									  border: 0px solid #ccc; position: relative; min-height: 200px; }
 .ui-tabs .ui-tabs-hide 				{ display: none !important; }
 
 
@@ -29,5 +29,5 @@ li.ui-state-processing a 			{ cursor: text; }
 
 a.mover 							{ background: #0F83DB; padding: 6px 12px; position: absolute;
 								      color: white; font-weight: bold; text-decoration: none; }
-.next-tab 							{ bottom: 0; right: 0; -moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px; }
-.prev-tab 							{ bottom: 0; left: 0; -moz-border-radius-topright: 10px; -webkit-border-top-right-radius: 10px; }
+.next-tab 							{ top: -50; right: 0; -moz-border-radius-topleft: 10px; -webkit-border-bottom-left-radius: 10px; }
+.prev-tab 							{ top: -50; left: 0; -moz-border-radius-topright: 10px; -webkit-border-bottom-right-radius: 10px; }

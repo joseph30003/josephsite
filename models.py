@@ -34,20 +34,33 @@ class Query(models.Model):
 	              'Stage IVA', 'Stage IB', 'Stage IIB', 'Stage IIIB', 'Stage IVB', 'Stage IC', 'Stage IIC',
 	              'Stage IIIC', 'Stage IVC']
 	Grade_list = ['Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade I', 'Grade II', 'Grade III', 'Grade IV']
-	disease = models.CharField(max_length=100)
-	age = models.CharField(max_length=2)
-	gender = models.CharField(max_length=6,choices=createChoice(Gender_list))
-	gene = models.CharField(max_length=100)
-	aas = models.CharField( max_length=100)
-	stage = models.CharField(max_length=10, choices=createChoice(Stage_list))
-	grade = models.CharField(max_length=10, choices=createChoice(Grade_list))
-	address = models.CharField(max_length=100)
+	disease = models.CharField(max_length=100,blank=True,null=True)
+	age = models.CharField(max_length=3,blank=True,null=True)
+	gender = models.CharField(max_length=6,choices=createChoice(Gender_list),blank=True,null=True)
+	gene = models.CharField(max_length=100,blank=True,null=True)
+	aas = models.CharField( max_length=100,blank=True,null=True)
+	stage = models.CharField(max_length=10, choices=createChoice(Stage_list),blank=True,null=True)
+	grade = models.CharField(max_length=10, choices=createChoice(Grade_list),blank=True,null=True)
+	address = models.CharField(max_length=100,blank=True,null=True)
+	resultNUM = models.IntegerField(blank=True,null=True)
+
+	def __str__(self):
+		return self.disease
 
 class Answer(models.Model):
 	Eligibility_list = ((True,'YES'),(False,'NO'))
 	Character_list = ['disease','age','gender','stage','grade','gene','mutation']
+	query = models.ForeignKey(Query,default=0)
+	queryID = models.CharField(max_length=20,blank=True,null=True)
+	clinicalTrial = models.CharField(max_length=20)
 	eligibility = models.BooleanField(choices=Eligibility_list)
 	character = models.ManyToManyField(Characters)
 	section = models.ManyToManyField(Sections)
-	sentence = models.TextField()
-	comment = models.TextField()
+	sentence = models.TextField(blank=True,null=True)
+	comment = models.TextField(blank=True,null=True)
+	author = models.CharField(max_length=20,blank=True, null=True)
+	time = models.IntegerField(blank=True,null=True)
+
+class GeneSyn(models.Model):
+	gene = models.CharField(max_length=150)
+	synonyms = models.CharField(max_length=150,blank=True,null=True)

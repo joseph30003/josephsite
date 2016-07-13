@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Choose 1 query <span class="by">and</span> have <span class="by">a</span> fun{% endblock %}
+{% block content %}
+
+
+{% for b in obj %}
+<h3>
+
+    <span class="by">  Disease </span>  {{ b.disease }} |
+    {% if b.gene %}
+    <span class="by">  Gene </span>  {{ b.gene }} |
+    {% endif %}
+    {% if b.age %}
+    <span class="by">  Age </span>  {{ b.age }} |
+    {% endif %}
+    {% if b.gender %}
+    <span class="by">  Gender </span>  {{ b.gender }} |
+    {% endif %}
+    {% if b.stage %}
+    {{ b.stage }} |
+    {% endif %}
+    {% if b.grade %}
+    {{ b.grade }} |
+    {% endif %}
+    <a href="./{{ b.id }}/"> GO &#187;</a>
+</h3>
+{% endfor %}
+
+{% endblock %}
