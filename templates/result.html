@@ -1,0 +1,70 @@
+{% extends "base_result.html" %}
+
+{% block title %}Summary{% endblock %}
+{% block content %}
+
+
+{% for b in obj %}
+<h3>
+    <div class="col">
+    <h4><span class="by">  Disease </span>  {{ b.disease }} |
+    {% if b.gene %}
+    <span class="by">  Gene </span>  {{ b.gene }} |
+    {% endif %}
+    {% if b.age %}
+    <span class="by">  Age </span>  {{ b.age }} |
+    {% endif %}
+    {% if b.gender %}
+    <span class="by">  Gender </span>  {{ b.gender }} |
+    {% endif %}
+    {% if b.stage %}
+    {{ b.stage }} |
+    {% endif %}
+    {% if b.grade %}
+    {{ b.grade }} |
+    {% endif %}
+   </br>
+    <span class="by">  Total Result </span>   {{ b.resultNUM }} |
+     <span class="by">  Finished </span>  {{ b.finishedNUM }} |
+     <span class="by">  eligible  </span>  {{ b.positive }} |
+    <span class="by">  not eligible </span>  {{ b.negtive }} |
+    </h4>
+    </div>
+    <div class="col">
+    <canvas id="doughnut-{{ forloop.counter }}" height="150" width="800"></canvas>
+    <canvas id="bar-{{ forloop.counter }}" height="200" width="800"></canvas>
+    </div>
+    <script>
+       var doughnutData_{{ forloop.counter }}  = [
+       {
+        value: {{ b.resultNUM }}-{{ b.finishedNUM }},
+        color:"#68dff0"
+      },
+      {
+        value : {{ b.positive }},
+        color : "#339966"
+      },
+      {
+        value : {{ b.negtive }},
+        color : "#800000"
+      },
+      ];
+       var barChartData_{{ forloop.counter }} = {
+        labels : ["Title","Description","Inclusion Criteria","Exclusion Criteria"],
+        datasets : [
+            {
+                fillColor : "rgba(220,220,220,0.5)",
+                strokeColor : "rgba(220,220,220,1)",
+                data : [65,59,34,81]
+            },
+
+        ]
+    };
+
+      new Chart(document.getElementById("bar-{{ forloop.counter }}").getContext("2d")).Bar(barChartData_{{ forloop.counter }});
+      new Chart(document.getElementById("doughnut-{{ forloop.counter }}").getContext("2d")).Doughnut(doughnutData_{{ forloop.counter }});
+    </script>
+</h3>
+{% endfor %}
+
+{% endblock %}

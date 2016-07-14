@@ -11,5 +11,6 @@ urlpatterns = [
 	url(r'^test/$', views.vl_query, name='queryDemo'),
 	url(r'^test/(?P<queryID>[0-9]+)/$', views.vl_questionary, name='questionary'),
 	url(r'^test/(?P<queryID>[0-9]+)/(?P<nct>\w+)/$', views.vl_Aws, name='submitAws'),
+    url(r'^test/result/$', views.vl_result, name='demoResult'),
 
 ]

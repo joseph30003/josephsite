@@ -527,14 +527,15 @@ def vl_questionary(request, queryID='0'):
 	               {'form': form, 'records': ls, 'disease': disease, 'gene': gene, 'syns': synonyms, 'aas': aas, 'age': age,
 	                'gender': gender, 'stage': stage, 'grade': grade, 'subtitle': title, 'queryID': queryID})
 
-
+def str2bool(v):
+  return v.lower() in ("yes", "true", "t", "1")
 def vl_Aws(request, queryID='0', nct=''):
 	msg = ""
 
 	if nct != '':
 		sections = request.POST.getlist ('section')
-
-		aws = Answer (query=Query.objects.get (id=queryID), clinicalTrial=nct, eligibility=request.POST['eligibility'],
+		print(request.POST['eligibility'])
+		aws = Answer (query=Query.objects.get (id=queryID), clinicalTrial=nct, eligibility=str2bool(request.POST['eligibility']),
 		              sentence=request.POST['sentence'], author=request.POST['author'],timer=request.POST['timer'] )
 
 		aws.save ()
@@ -546,3 +547,29 @@ def vl_Aws(request, queryID='0', nct=''):
 	html = "<h3>%s.</h3>" % msg
 
 	return HttpResponse (html)
+
+
+
+from django.forms.models import model_to_dict
+from django.db.models import Count
+def vl_result(request):
+	rs=[]
+	querys = Query.objects.all()
+
+
+	for query in querys:
+		q = model_to_dict(query)
+		answers = Answer.objects.filter(query=query)
+		q['finishedNUM'] = answers.count()
+		q['positive'] = 0
+		q['negtive'] = 0
+		for aws in answers:
+			if aws.eligibility == True :
+				print(aws.eligibility)
+				q['positive'] = q['positive'] + 1
+			else:
+				q['negtive'] = q['negtive'] + 1
+
+		rs.append(q)
+	print(rs)
+	return render_to_response ('result.html', {'obj': rs })
