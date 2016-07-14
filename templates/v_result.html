@@ -46,20 +46,36 @@
 
                 </div>
 
-                  <div id="sidebar-{{ forloop.counter }}" class="col last span-3">
+                  <div id="sidebar" class="col last span-3">
 
                     <div id="profile" class="section">
                      <h3>Profile</h3>
                      <h5> <span class="by"> disease</span> </br>{{ disease }}</h5>
+                     {% if gene %}
                      <h5> <span class="by"> gene</span></br> {{ gene }} </h5>
-                     <h5> <span class="by"> gender</span></br> {{ gender }}</h5>
-                     <h5> <span class="by"> age</span></br> {{ age }}</h5>
-                     <h5>   {{ stage }}</h5>
-                     <h5>   {{ grade }} </h5>
 
+                     <h5>  <span class="by"> gene synonyms</span></br>
+                         {% for s in syns %}
+                         {{ s }},
+                         {% endfor %}
+                     </h5>
+                     {% endif %}
+                     {% if gender %}
+                     <h5> <span class="by"> gender</span></br> {{ gender }}</h5>
+                     {% endif %}
+                     {% if age %}
+                     <h5> <span class="by"> age</span></br> {{ age }}</h5>
+                        {% endif %}
+                     {% if stage %}
+                     <h5>   {{ stage }}</h5>
+                        {% endif %}
+                     {% if grade %}
+                     <h5>   {{ grade }} </h5>
+                        {% endif %}
 
                     </div>
-                    <div id="search" class="section">
+
+                    <div id="search-{{ forloop.counter }}" class="section">
                     {% if rec.author  %}
                     <h3> <span class="by">Already done by </span>  {{ rec.author }}</h3>
                     {% else %}
@@ -68,6 +84,7 @@
 
 
                     <form method="post" id="question-{{ forloop.counter }}">
+                    <button id="timer-{{ forloop.counter }}" type="button">Ready GO!</button>
                     {% csrf_token %}
                     {{ form }}
                     <input type="submit" value="finish" />
@@ -81,10 +98,22 @@
             </div>
 
             <script>
+            var current_{{ forloop.counter }} = new Date()
+            $('#timer-{{ forloop.counter }}').click(function(){
+             $('#timer-{{ forloop.counter }}').addClass('hideme');
+             var current_{{ forloop.counter }} = new Date()
+
+            });
+
+
             $('#question-{{ forloop.counter }}').submit(function(e){
 
+            var final=new Date()
+            var interval = final.getTime()-current_{{ forloop.counter }}.getTime();
+            $('#question-{{ forloop.counter }} input[name="timer"]').val(interval);
+
 			$.post('./{{ rec.id }}/',$(this).serialize(),function(data){
-				$('#sidebar-{{ forloop.counter }}').empty().append(data);
+				$('#search-{{ forloop.counter }}').empty().append(data);
 
 			});
 			e.preventDefault();

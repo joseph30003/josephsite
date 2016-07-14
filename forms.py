@@ -28,13 +28,15 @@ class questionForm(forms.ModelForm):
 
 	class Meta:
 		model = Answer
-		fields = ['eligibility','section','sentence','author']
+		fields = ['eligibility','section','sentence','author','timer']
 		labels = {
 			'eligibility' : 'Is the patient eligible for this trial',
 			'section' : 'What section(s) of the clinical trial document allowed you to render this decision',
 			'sentence' : 'What sentence(s) of these section(s) allowed you to render this decision',
-			'author' : 'Signature'
+			'author' : 'Signature',
+			'timer' : ''
 		}
+		widgets = {'timer': forms.TextInput(attrs={'class':'hideme'})}
 
 	def __init__(self, *args, **kwargs):
 		super(questionForm, self).__init__(*args, **kwargs)

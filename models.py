@@ -59,8 +59,11 @@ class Answer(models.Model):
 	sentence = models.TextField(blank=True,null=True)
 	comment = models.TextField(blank=True,null=True)
 	author = models.CharField(max_length=20,blank=True, null=True)
-	time = models.IntegerField(blank=True,null=True)
+	timer = models.IntegerField(blank=True,null=True)
 
 class GeneSyn(models.Model):
 	gene = models.CharField(max_length=150)
 	synonyms = models.CharField(max_length=150,blank=True,null=True)
+
+	def __str__(self):
+		return self.synonyms

@@ -388,7 +388,7 @@ def vl_questionary(request, queryID='0'):
 	stage = query.stage
 	grade = query.grade
 	address = query.address
-
+	synonyms = []
 	# added here but should be put in a config file
 	use_should = False
 	multi_match_type = 'cross_fields'
@@ -435,6 +435,9 @@ def vl_questionary(request, queryID='0'):
 
 			})
 	if gene:
+		geneSyns = GeneSyn.objects.filter(gene=gene)
+		for g in geneSyns:
+			synonyms.append(g.synonyms)
 		body["query"]["bool"]["must"].append ({
 			"multi_match":
 				{
@@ -521,16 +524,18 @@ def vl_questionary(request, queryID='0'):
 		ls.append (rec)
 
 	return render (request, 'v_result.html',
-	               {'form': form, 'records': ls, 'disease': disease, 'gene': gene, 'aas': aas, 'age': age,
+	               {'form': form, 'records': ls, 'disease': disease, 'gene': gene, 'syns': synonyms, 'aas': aas, 'age': age,
 	                'gender': gender, 'stage': stage, 'grade': grade, 'subtitle': title, 'queryID': queryID})
 
 
 def vl_Aws(request, queryID='0', nct=''):
 	msg = ""
+
 	if nct != '':
 		sections = request.POST.getlist ('section')
+
 		aws = Answer (query=Query.objects.get (id=queryID), clinicalTrial=nct, eligibility=request.POST['eligibility'],
-		              sentence=request.POST['sentence'], author=request.POST['author'], )
+		              sentence=request.POST['sentence'], author=request.POST['author'],timer=request.POST['timer'] )
 
 		aws.save ()
 		for sec in sections:
