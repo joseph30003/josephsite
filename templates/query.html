@@ -28,3 +28,20 @@
 {% endfor %}
 
 {% endblock %}
+
+{% block sidebar %}
+
+    <div id="search" class="section">
+    <h3>Add Query</h3>
+    <form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+    </form>
+
+</div>
+
+
+
+
+{% endblock %}
